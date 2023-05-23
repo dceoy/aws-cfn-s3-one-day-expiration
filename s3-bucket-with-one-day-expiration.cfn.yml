@@ -26,8 +26,43 @@ Resources:
             ExpirationInDays: 1
             NoncurrentVersionExpiration:
               NoncurrentDays: 7
+  OneDayExpirationBucketUserGroup:
+    Type: AWS::IAM::Group
+    Properties:
+      GroupName: !Sub one-day-expiration-bucket-user-group-${AWS::AccountId}
+      Path: /
+      Policies:
+        - PolicyName: !Sub one-day-expiration-bucket-user-policy-${AWS::AccountId}
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:Describe*
+                  - s3:Get*
+                  - s3:List*
+                  - s3:*Object*
+                  - s3:*MultipartUpload*
+                  - s3-object-lambda:Get*
+                  - s3-object-lambda:List*
+                  - s3-object-lambda:*Object*
+                  - s3-object-lambda:*MultipartUpload*
+                Resource:
+                  - Fn::Join:
+                      - ''
+                      - - 'arn:aws:s3:::'
+                        - !Ref OneDayExpirationBucket
+                  - Fn::Join:
+                      - ''
+                      - - 'arn:aws:s3:::'
+                        - !Ref OneDayExpirationBucket
+                        - /*
 Outputs:
   OneDayExpirationBucket:
     Value: !Ref OneDayExpirationBucket
     Export:
       Name: !Sub ${AWS::Region}-${AWS::StackName}-OneDayExpirationBucket
+  OneDayExpirationBucketUserGroup:
+    Value: !Ref OneDayExpirationBucketUserGroup
+    Export:
+      Name: !Sub ${AWS::Region}-${AWS::StackName}-OneDayExpirationBucketUserGroup
