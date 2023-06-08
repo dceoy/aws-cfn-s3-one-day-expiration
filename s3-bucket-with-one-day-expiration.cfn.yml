@@ -21,11 +21,13 @@ Resources:
         Status: Enabled
       LifecycleConfiguration:
         Rules:
-          - Id: OneDayExpiredDataRemoval
+          - Id: Expire-after-1day
             Status: Enabled
             ExpirationInDays: 1
             NoncurrentVersionExpiration:
-              NoncurrentDays: 7
+              NoncurrentDays: 1
+            AbortIncompleteMultipartUpload:
+              DaysAfterInitiation: 1
   OneDayExpirationBucketUserGroup:
     Type: AWS::IAM::Group
     Properties:
