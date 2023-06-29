@@ -28,6 +28,9 @@ Resources:
               NoncurrentDays: 1
             AbortIncompleteMultipartUpload:
               DaysAfterInitiation: 1
+      Tags:
+        - Key: Name
+          Value: !Sub one-day-expiration-${AWS::AccountId}
   OneDayExpirationBucketUserGroup:
     Type: AWS::IAM::Group
     Properties:
