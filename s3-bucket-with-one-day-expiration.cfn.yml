@@ -2,7 +2,7 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: S3 bucket with data expired and deleted in 1 day
 Resources:
-  OneDayExpirationBucket:
+  OneDayExpirationS3Bucket:
     Type: AWS::S3::Bucket
     DeletionPolicy: Delete
     UpdateReplacePolicy: Delete
@@ -31,7 +31,7 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub one-day-expiration-${AWS::AccountId}
-  OneDayExpirationBucketUserGroup:
+  OneDayExpirationS3BucketIamGroup:
     Type: AWS::IAM::Group
     Properties:
       GroupName: !Sub one-day-expiration-bucket-user-group-${AWS::AccountId}
@@ -56,18 +56,18 @@ Resources:
                   - Fn::Join:
                       - ''
                       - - 'arn:aws:s3:::'
-                        - !Ref OneDayExpirationBucket
+                        - !Ref OneDayExpirationS3Bucket
                   - Fn::Join:
                       - ''
                       - - 'arn:aws:s3:::'
-                        - !Ref OneDayExpirationBucket
+                        - !Ref OneDayExpirationS3Bucket
                         - /*
 Outputs:
-  OneDayExpirationBucket:
-    Value: !Ref OneDayExpirationBucket
+  OneDayExpirationS3Bucket:
+    Value: !Ref OneDayExpirationS3Bucket
     Export:
-      Name: !Sub ${AWS::Region}-${AWS::StackName}-OneDayExpirationBucket
-  OneDayExpirationBucketUserGroup:
-    Value: !Ref OneDayExpirationBucketUserGroup
+      Name: !Sub ${AWS::Region}-${AWS::StackName}-OneDayExpirationS3Bucket
+  OneDayExpirationS3BucketIamGroup:
+    Value: !Ref OneDayExpirationS3BucketIamGroup
     Export:
-      Name: !Sub ${AWS::Region}-${AWS::StackName}-OneDayExpirationBucketUserGroup
+      Name: !Sub ${AWS::Region}-${AWS::StackName}-OneDayExpirationS3BucketIamGroup

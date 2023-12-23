@@ -1,0 +1,32 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: IAM user for S3 access
+Resources:
+  OneDayExpirationS3BucketIamUser:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: !Sub one-day-expiration-bucket-user-${AWS::AccountId}
+      Groups:
+        - !Sub one-day-expiration-bucket-user-group-${AWS::AccountId}
+      Path: /
+      Tags:
+        - Key: Name
+          Value: !Sub one-day-expiration-bucket-user-${AWS::AccountId}
+  OneDayExpirationS3BucketIamUserAccessKey:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      UserName: !Ref OneDayExpirationS3BucketIamUser
+      Status: Active
+Outputs:
+  OneDayExpirationS3BucketIamUser:
+    Value: !Ref OneDayExpirationS3BucketIamUser
+    Export:
+      Name: !Sub ${AWS::Region}-${AWS::StackName}-OneDayExpirationS3BucketIamUser
+  OneDayExpirationS3BucketIamUserAccessKey:
+    Value: !Ref OneDayExpirationS3BucketIamUserAccessKey
+    Export:
+      Name: !Sub ${AWS::Region}-${AWS::StackName}-OneDayExpirationS3BucketIamUserAccessKey
+  OneDayExpirationS3BucketIamUserSecretAccessKey:
+    Value: !GetAtt OneDayExpirationS3BucketIamUserAccessKey.SecretAccessKey
+    Export:
+      Name: !Sub ${AWS::Region}-${AWS::StackName}-OneDayExpirationS3BucketIamUserSecretAccessKey
