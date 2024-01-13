@@ -5,13 +5,13 @@ Resources:
   OneDayExpirationS3BucketIamUser:
     Type: AWS::IAM::User
     Properties:
-      UserName: !Sub one-day-expiration-bucket-user-${AWS::AccountId}
+      UserName: one-day-expiration-bucket-user
       Groups:
-        - !Sub one-day-expiration-bucket-user-group-${AWS::AccountId}
+        - one-day-expiration-bucket-user-group
       Path: /
       Tags:
         - Key: Name
-          Value: !Sub one-day-expiration-bucket-user-${AWS::AccountId}
+          Value: one-day-expiration-bucket-user
   OneDayExpirationS3BucketIamUserAccessKey:
     Type: AWS::IAM::AccessKey
     Properties:

@@ -34,10 +34,10 @@ Resources:
   OneDayExpirationS3BucketIamGroup:
     Type: AWS::IAM::Group
     Properties:
-      GroupName: !Sub one-day-expiration-bucket-user-group-${AWS::AccountId}
+      GroupName: one-day-expiration-bucket-user-group
       Path: /
       Policies:
-        - PolicyName: !Sub one-day-expiration-bucket-user-policy-${AWS::AccountId}
+        - PolicyName: one-day-expiration-bucket-user-policy
           PolicyDocument:
             Version: 2012-10-17
             Statement:
